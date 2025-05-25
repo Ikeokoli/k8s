@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: website_script
+  labels:
+    app: website_script
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: website_script
+  template:
+    metadata:
+      labels:
+        app: website_script
+    spec:
+      containers:
+      - name: website_script
+        image: ghcr.io/ikeokoli/website_script:latestversion1
+        ports:
+        - containerPort: 80
