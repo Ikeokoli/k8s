@@ -3,10 +3,9 @@ kind: Service
 metadata:
   name: website_scriptservice
 spec:
-  type: NodePort          
+  type: ClusterIP          
   selector:
     app: website_script
   ports:
   - port: 80              
-    targetPort: 80       
-    nodePort: 30007
+    targetPort: 80   
