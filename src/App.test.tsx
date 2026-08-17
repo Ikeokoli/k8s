@@ -25,4 +25,16 @@ describe("Cluster Rollout Console", () => {
     await user.click(within(row!).getByRole("button", { name: "Review" }));
     expect(within(screen.getByRole("complementary", { name: "Rollout review" })).getByRole("heading", { name: "checkout-api" })).toBeInTheDocument();
   });
+  it("keeps the decision attached to the same rollout after sorting", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+    const checkoutRow = screen.getByText("checkout-api").closest("tr");
+    await user.click(within(checkoutRow!).getByRole("button", { name: "Review" }));
+    await user.click(screen.getByRole("button", { name: /Started/ }));
+    const panel = screen.getByRole("complementary", { name: "Rollout review" });
+    expect(within(panel).getByRole("heading", { name: "checkout-api" })).toBeInTheDocument();
+    const table = screen.getByRole("table", { name: "Active service rollouts" });
+    const selectedRow = within(table).getByText("checkout-api").closest("tr");
+    expect(within(selectedRow!).getByRole("button", { name: "Selected" })).toBePressed();
+  });
 });

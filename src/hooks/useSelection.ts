@@ -1,6 +1,6 @@
 import { useState } from "react";
 
 export function useSelection() {
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  return { selectedIndex, select: setSelectedIndex, clear: () => setSelectedIndex(null) };
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  return { selectedId, select: setSelectedId, clear: () => setSelectedId(null) };
 }
