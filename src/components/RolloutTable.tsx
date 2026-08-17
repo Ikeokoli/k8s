@@ -1,12 +1,12 @@
 import type { Rollout, SortDirection } from "../types";
 import { RolloutRow } from "./RolloutRow";
 
-export function RolloutTable({ rollouts, selectedIndex, sortDirection, onSort, onSelect }: {
+export function RolloutTable({ rollouts, selectedId, sortDirection, onSort, onSelect }: {
   rollouts: Rollout[];
-  selectedIndex: number | null;
+  selectedId: string | null;
   sortDirection: SortDirection;
   onSort: () => void;
-  onSelect: (index: number) => void;
+  onSelect: (id: string) => void;
 }) {
   if (rollouts.length === 0) return <p className="empty-state">No rollouts match this environment.</p>;
 
@@ -26,8 +26,8 @@ export function RolloutTable({ rollouts, selectedIndex, sortDirection, onSort, o
           <th scope="col"><span className="sr-only">Actions</span></th>
         </tr></thead>
         <tbody>
-          {rollouts.map((rollout, index) => (
-            <RolloutRow key={rollout.id} rollout={rollout} selected={selectedIndex === index} onSelect={() => onSelect(index)} />
+          {rollouts.map((rollout) => (
+            <RolloutRow key={rollout.id} rollout={rollout} selected={selectedId === rollout.id} onSelect={() => onSelect(rollout.id)} />
           ))}
         </tbody>
       </table>

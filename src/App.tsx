@@ -13,12 +13,12 @@ import type { EnvironmentFilterValue, SortDirection } from "./types";
 export default function App() {
   const [environment, setEnvironment] = useState<EnvironmentFilterValue>("All");
   const [sortDirection, setSortDirection] = useState<SortDirection>("newest");
-  const { selectedIndex, select, clear } = useSelection();
+  const { selectedId, select, clear } = useSelection();
   const visibleRollouts = useMemo(
     () => sortRollouts(filterRollouts(initialRollouts, environment), sortDirection),
     [environment, sortDirection],
   );
-  const selectedRollout = selectedIndex === null ? null : (visibleRollouts[selectedIndex] ?? null);
+  const selectedRollout = initialRollouts.find((rollout) => rollout.id === selectedId) ?? null;
 
   return (
     <div className="app-shell">
@@ -41,7 +41,7 @@ export default function App() {
             </div>
             <RolloutTable
               rollouts={visibleRollouts}
-              selectedIndex={selectedIndex}
+              selectedId={selectedId}
               sortDirection={sortDirection}
               onSort={() => setSortDirection((current) => current === "newest" ? "oldest" : "newest")}
               onSelect={select}
